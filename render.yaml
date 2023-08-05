@@ -1,0 +1,8 @@
+services:
+  # Traefik reverse proxy and load balancer (1 instance)
+  - type: web
+    name: reverse-proxy
+    runtime: image
+    image:
+      url: docker.io/traefik/traefik:v2.6
+    dockerCommand: --api.insecure=true --providers.docker
