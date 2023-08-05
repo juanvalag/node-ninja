@@ -1,9 +1,11 @@
+// PostgreSQL database methods
+import EventEmitter from 'events';
 import pg from 'pg';
+
 // data type parsers
 pg.types.setTypeParser(pg.types.builtins.INT2, v => parseInt(v, 10));
 pg.types.setTypeParser(pg.types.builtins.INT4, v => parseInt(v, 10));
 pg.types.setTypeParser(pg.types.builtins.INT8, v => parseFloat(v));
-
 
 const pool = new pg.Pool({
     host: process.env.POSTGRES_SERVER,
@@ -13,6 +15,7 @@ const pool = new pg.Pool({
     password: process.env.POSTGRES_QUIZPASS
 });
 
+
 // count questions in database
 export async function questionCount() {
 
@@ -20,6 +23,7 @@ export async function questionCount() {
     return res?.[0]?.count;
 
 }
+
 
 // add a new question and answer set
 export async function questionAdd(question, answer) {
@@ -87,6 +91,7 @@ export async function questionAdd(question, answer) {
 
 }
 
+
 // create a new game
 export async function gameCreate(data) {
 
@@ -108,6 +113,7 @@ export async function gameCreate(data) {
 
 }
 
+
 // start game
 export async function gameStart(gameId) {
 
@@ -119,6 +125,7 @@ export async function gameStart(gameId) {
 
 }
 
+
 // remove a game
 export async function gameRemove(gameId) {
 
@@ -129,6 +136,7 @@ export async function gameRemove(gameId) {
 
 }
 
+
 // fetch game data
 export async function gameFetch(gameId) {
 
@@ -136,6 +144,7 @@ export async function gameFetch(gameId) {
     return game?.[0];
 
 }
+
 
 // create a new player
 export async function playerCreate(game_id, name) {
@@ -148,6 +157,7 @@ export async function playerCreate(game_id, name) {
 
 }
 
+
 // remove a player
 export async function playerRemove(playerId) {
 
@@ -158,12 +168,14 @@ export async function playerRemove(playerId) {
 
 }
 
+
 // fetch data for all players
 export async function playersFetch(gameId) {
 
     return await dbSelect('SELECT * FROM player WHERE game_id=$1;', [gameId]);
 
 }
+
 
 // fetch next question and answer set
 export async function questionFetch(qNum) {
@@ -196,7 +208,7 @@ async function dbSelect(sql, arg = []) {
 
     try {
         const result = await client.query(sql, arg);
-        return result?.rows;
+        return result && result.rows;
     }
     catch (err) {
         console.log(err);
@@ -206,6 +218,7 @@ async function dbSelect(sql, arg = []) {
     }
 
 }
+
 
 // database INSERT
 // pass object: { table: <tablename>, values: <{ n1: v1,... }>, return: <field> }
@@ -244,6 +257,7 @@ async function dbInsert(ins) {
 
 }
 
+
 // database UPDATE
 // pass object: { table: <tablename>, values: <{ n1: v1,... }>, where: <{ n1: v1,... }> }
 async function dbUpdate(upd) {
@@ -278,6 +292,7 @@ async function dbUpdate(upd) {
 
 }
 
+
 // database delete
 // pass object: { table: <tablename>, where: <{ n1: v1,... }> }
 // logical AND is used for all where name/value pairs
@@ -307,12 +322,6 @@ async function dbDelete(del) {
 
 }
 
-// return integer between low and high values
-function clamp(min = 0, value = 0, max = 0) {
-
-    return Math.max(min, Math.min(parseInt(value || '0', 10) || 0, max));
-
-}
 
 // pubsub event emitter
 class PubSub extends EventEmitter {
@@ -371,3 +380,10 @@ export async function broadcast(game_id, type, data) {
 
 }
 
+
+// return integer between low and high values
+function clamp(min = 0, value = 0, max = 0) {
+
+    return Math.max(min, Math.min(parseInt(value || '0', 10) || 0, max));
+
+}
