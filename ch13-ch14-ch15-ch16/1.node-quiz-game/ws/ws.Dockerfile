@@ -17,7 +17,7 @@ WORKDIR $HOME
 COPY --chown=node:node package*.json $HOME/
 
 # set the active user
-USER node
+USER root
 
 # install application modules
 RUN npm install
