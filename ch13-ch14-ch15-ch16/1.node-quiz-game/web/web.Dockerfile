@@ -13,11 +13,11 @@ RUN mkdir -p $HOME && chown -R node:node $HOME
 # set the working directory
 WORKDIR $HOME
 
-# set the active user
-USER node
-
 # copy package.json from the host
 COPY --chown=node:node package*.json $HOME/
+
+# set the active user
+USER node
 
 # install application modules
 RUN npm install
