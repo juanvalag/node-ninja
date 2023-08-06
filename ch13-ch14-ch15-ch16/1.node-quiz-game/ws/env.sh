@@ -1,3 +1,4 @@
+export NODE_ENV=development
 # database credentials (root)
 export POSTGRES_USER=postgres
 export POSTGRES_PASSWORD=pgpassword
