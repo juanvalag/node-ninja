@@ -5,6 +5,8 @@ import compression from 'compression';
 import { questionCount, gameCreate, gameFetch } from './libshared/quizdb.js';
 import { questionsImport } from './lib/questionsimport.js';
 import * as libId from './libshared/libid.js';
+import { config } from 'dotenv';
+config();
 // configuration
 const cfg = {
     dev: ((process.env.NODE_ENV).trim().toLowerCase() !== 'production'),

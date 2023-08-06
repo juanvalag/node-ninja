@@ -3,7 +3,8 @@
 // modules
 import { WebSocketServer } from 'ws';
 import { Player } from './lib/player.js';
-
+import { config } from 'dotenv';
+config();
 // configuration
 const
     cfg = {
