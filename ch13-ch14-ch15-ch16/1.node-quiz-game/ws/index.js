@@ -1,10 +1,11 @@
 // main Web Socket server
 
 // modules
-import { WebSocketServer } from 'ws';
-import { Player } from './lib/player.js';
 import { config } from 'dotenv';
 config();
+import { WebSocketServer } from 'ws';
+import { Player } from './lib/player.js';
+
 // configuration
 const
     cfg = {

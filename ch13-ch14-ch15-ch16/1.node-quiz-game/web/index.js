@@ -1,12 +1,12 @@
 // Express
+import { config } from 'dotenv';
+config();
 import express from 'express';
 import compression from 'compression';
 // modules
 import { questionCount, gameCreate, gameFetch } from './libshared/quizdb.js';
 import { questionsImport } from './lib/questionsimport.js';
 import * as libId from './libshared/libid.js';
-import { config } from 'dotenv';
-config();
 // configuration
 const cfg = {
     dev: ((process.env.NODE_ENV).trim().toLowerCase() !== 'production'),
