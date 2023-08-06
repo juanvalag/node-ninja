@@ -207,7 +207,7 @@ async function dbSelect(sql, arg = []) {
     const client = await pool.connect();
 
     try {
-        await db.query("SET search_path TO 'public';");
+        await client.query("SET search_path TO 'public';");
         const result = await client.query(sql, arg);
         return result && result.rows;
     }
