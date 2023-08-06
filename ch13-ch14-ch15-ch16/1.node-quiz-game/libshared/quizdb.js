@@ -7,13 +7,6 @@ pg.types.setTypeParser(pg.types.builtins.INT2, v => parseInt(v, 10));
 pg.types.setTypeParser(pg.types.builtins.INT4, v => parseInt(v, 10));
 pg.types.setTypeParser(pg.types.builtins.INT8, v => parseFloat(v));
 
-console.dir({
-    host: process.env.POSTGRES_SERVER,
-    port: process.env.POSTGRES_PORT,
-    database: process.env.POSTGRES_DB,
-    user: process.env.POSTGRES_QUIZUSER,
-    password: process.env.POSTGRES_QUIZPASS
-});
 const pool = new pg.Pool({
     host: process.env.POSTGRES_SERVER,
     port: process.env.POSTGRES_PORT,
