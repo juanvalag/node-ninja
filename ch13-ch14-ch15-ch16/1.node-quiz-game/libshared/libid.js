@@ -1,13 +1,31 @@
-// encode and decodes numeric database IDs to shorter names
 const
-    decodeChars = '2346789acdefghkmnpqrtvwxy', // valid URL path characters
+    /**
+     * Define todos los caracteres que puede tener una url de un juego.
+     * ignora los caracteres que pueden ser confusos como o y 0
+     */
+    decodeChars = '2346789acdefghkmnpqrtvwxy',
+/**
+* = 25.
+* 
+* La base es el número de digitos y/o letras del abecedario desde los que se pueden crear más números.
+* En los números naturales la base es 10 (están 0123456789 que forman todos los demás números de 10 en 10).
+*
+* En los número hexadecimales la base es 16 (están 0123456789abcdef que forman todos los números, como ejemplos
+* el 10 es a, el 11 es b... el 16 es 10, el 17 es 11... el 26 es 1a, el 27 es 1b, etc).
+*/
     base = decodeChars.length,
     numOffset = base ** 2,
     numMult = 7,
+/**
+ * @constant {Object.<string,string>} encodeMap Objeto que contiene para cada index de decodeChars en base 25
+ * un caracter de decodeChars
+ */
     encodeMap = {},
+/**
+ * @constant {Object.<string,string>} decodeMap Objeto que contiene para cada caracter de decodeChars un index de decodeChars en base 25
+ */
     decodeMap = {};
 
-// create maps
 decodeChars.split('').map((d, i) => {
     const e = i.toString(base);
     encodeMap[e] = d;
@@ -49,12 +67,16 @@ export function clean(str, length = 10) {
 
 
 // convert between character sets
+/**
+ * Pasa una cadena de indexes de una base a una cadena caracteres del charset
+ * @param {string} str indexes en una base que coincide con la de charset
+ * @param {Object.<string,string>} charSet pares de clave/valor donde es indexes en la base nueva/caracteres de esa base
+ * @returns {string}
+ */
 function charConvert(str, charSet) {
-
     return str
         .split('')
         .reverse()
-        .map(c => charSet[c] || '')
+        .map(char => charSet[char] || '')
         .join('');
-
 }
