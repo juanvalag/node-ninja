@@ -436,7 +436,7 @@ async function dbDelete(delCommand) {
  * para que el cliente de PostgeSQL reciba notificaciones en el canal `pubsub_insert` de PostgreSQL.
  * 
  * Este canal está definido en 001-quiz.sql: cuando se ejecuta pg_notify dentro del trigger después de cada inserción en la tabla pubsub,
-//  * pg_notify recibe el canal a notificar (`pubsub_insert`) y el mensaje (la fila insertada como un json, por medio de la funcion `row_to_json`).
+ * pg_notify recibe el canal a notificar (`pubsub_insert`) y el mensaje (la fila insertada como un json, por medio de la funcion `row_to_json`).
  * 
  * Una vez se reciba una notificación de PostreSQL se emite un evento normal del EventEmitter
  * con id de evento como 'event:<id del juego>' y un objeto parametro que contiene el id del juego actual,
